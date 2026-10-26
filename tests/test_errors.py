@@ -11,17 +11,23 @@ def hata(kaynak: str) -> str:
 
 
 def test_iki_nokta_eksik_örneği():
-    mesaj = hata("toplam = 0\nyazdır(toplam)\neğer toplam > 10\n    yazdır(1)\n")
+    mesaj = hata("toplam = 0\nyazdır(toplam)\neğer toplam > 10 ise\n    yazdır(1)\n")
     satırlar = mesaj.splitlines()
-    assert satırlar[0] == "Hata (3. satır): eğer toplam > 10"
+    assert satırlar[0] == "Hata (3. satır): eğer toplam > 10 ise"
     assert satırlar[-1] == 'İpucu: Satırın sonunda ":" eksik olabilir.'
+
+
+def test_python_iki_nokta_eksik_ipucu():
+    mesaj = hata("işlev f()\n    döndür 1\n")
+    assert mesaj.startswith("Hata (1. satır): işlev f()")
+    assert 'İpucu: Satırın sonunda ":" eksik olabilir.' in mesaj
 
 
 @pytest.mark.parametrize("kaynak, satır, parça", [
     ("x = (1,\n2\n", 1, "parantez"),
     ("yazdır('merhaba)\n", 1, "tırnağı kapanmamış"),
     ("x = 1\nyazdır(x))\n", 2, "kapanış parantezi"),
-    ("x = 1\neğer x = 1:\n    geç\n", 2, '"=="'),
+    ("x = 1\neğer x = 1 ise:\n    geç\n", 2, '"=="'),
     ("döndür 1\n", 1, "işlevin içinde"),
     ("kır\n", 1, "döngünün içinde"),
 ])
@@ -32,9 +38,9 @@ def test_sözdizimi_hatası(kaynak, satır, parça):
 
 
 @pytest.mark.parametrize("kaynak, satır, parça", [
-    ("eğer doğru:\nyazdır(1)\n", 2, "içeriden (girintili) başlaması"),
+    ("eğer doğru ise:\nyazdır(1)\n", 2, "içeriden (girintili) başlaması"),
     ("x = 1\n    y = 2\n", 2, "gereksiz yere içeriden"),
-    ("eğer doğru:\n    x = 1\n  y = 2\n", 3, "uyuşmuyor"),
+    ("eğer doğru ise:\n    x = 1\n  y = 2\n", 3, "uyuşmuyor"),
 ])
 def test_girinti_hatası(kaynak, satır, parça):
     mesaj = hata(kaynak)

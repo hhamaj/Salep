@@ -132,3 +132,30 @@ def test_bozuk_içinden_kalıbı_türkçe_hata(kaynak, parça):
 
 def test_eski_şuradan_biçimi_artık_çevrilmez():
     assert çevir("şuradan os kullan path\n") == "şuradan os import path\n"
+
+
+@pytest.mark.parametrize("kaynak, beklenen", [
+    ("eğer x > 3 ise:\n", "if x > 3:\n"),
+    ("yoksa eğer x ise: geç\n", "elif x: pass\n"),
+    ("eğer değil bitti ise:\n", "if not bitti:\n"),
+    ("eğer d[1:2] ise:  # dilim\n", "if d[1:2]:  # dilim\n"),
+    ("eğer (a ve\n    b) ise:\n", "if (a and\n    b):\n"),
+    ("a = 1 eğer x yoksa 2\n", "a = 1 if x else 2\n"),  # satır içi koşulda 'ise' yok
+])
+def test_ise_kalıbı(kaynak, beklenen):
+    assert çevir(kaynak) == beklenen
+
+
+@pytest.mark.parametrize("kaynak, parça, ipucu", [
+    ("eğer x:\n", "'ise' gelmeli", "eğer sayı > 10 ise:"),
+    ("yoksa eğer x:\n", "'ise' gelmeli", "eğer sayı > 10 ise:"),
+    ("eğer x\n", "'ise:' ile bitmeli", "eğer sayı > 10 ise:"),
+    ("eğer ise:\n", "koşul yazmalısın", "eğer sayı > 10 ise:"),
+    ("eğer x ise\n", '":" gelmeli', '":" eksik'),
+])
+def test_bozuk_ise_kalıbı_türkçe_hata(kaynak, parça, ipucu):
+    with pytest.raises(SalepHatası) as bilgi:
+        çevir("x = 1\n" + kaynak)
+    assert parça in bilgi.value.mesaj
+    assert bilgi.value.satır == 2
+    assert ipucu in bilgi.value.ipucu

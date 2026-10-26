@@ -35,7 +35,8 @@ ANAHTAR_SÖZCÜKLER = {
 
 # --katı kipinde yasak olan İngilizce sözcükler ve Salep'teki karşılıkları.
 KATI_KARŞILIKLAR = {ing: tr for tr, ing in ANAHTAR_SÖZCÜKLER.items()}
-KATI_KARŞILIKLAR["elif"] = "yoksa eğer"
+KATI_KARŞILIKLAR["if"] = "eğer ... ise:"
+KATI_KARŞILIKLAR["elif"] = "yoksa eğer ... ise:"
 KATI_KARŞILIKLAR["for"] = "her ... için ... içinde"
 KATI_KARŞILIKLAR["while"] = "... iken"
 KATI_KARŞILIKLAR["from"] = "... içinden ... kullan"

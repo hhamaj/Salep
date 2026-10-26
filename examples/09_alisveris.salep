@@ -10,7 +10,7 @@ her ürün için sepet içinde:
 yazdır("Toplam:", toplam, "TL")
 
 cebimdeki_para = 100
-eğer cebimdeki_para >= toplam:
+eğer cebimdeki_para >= toplam ise:
     yazdır("Para üstü:", cebimdeki_para - toplam, "TL")
 yoksa:
     yazdır("Paran yetmiyor, biraz ürün çıkar.")

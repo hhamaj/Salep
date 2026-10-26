@@ -32,7 +32,7 @@ def test_dosya_çalıştırma(dosya):
 
 
 def test_çevir_komutu(dosya):
-    sonuç = salep("çevir", dosya("eğer doğru:\n    yazdır(1)\n"))
+    sonuç = salep("çevir", dosya("eğer doğru ise:\n    yazdır(1)\n"))
     assert sonuç.returncode == 0
     assert sonuç.stdout == "if True:\n    yazdır(1)\n"
 
@@ -69,7 +69,7 @@ def test_repl_çok_satırlı_blok():
     girdi = (
         "x = 5\n"
         "x * 2\n"
-        "eğer x > 3:\n"
+        "eğer x > 3 ise:\n"
         "    yazdır('büyük')\n"
         "\n"
         "l = [1,\n"
@@ -88,9 +88,9 @@ def test_repl_çok_satırlı_blok():
 
 @pytest.mark.parametrize("satırlar, tamam", [
     (["x = 1"], True),
-    (["eğer x:"], False),
-    (["eğer x:", "    y = 1"], False),
-    (["eğer x:", "    y = 1", ""], True),
+    (["eğer x ise:"], False),
+    (["eğer x ise:", "    y = 1"], False),
+    (["eğer x ise:", "    y = 1", ""], True),
     (["l = [1,"], False),
     (["l = [1,", "2]"], True),
     (["s = '''a"], False),

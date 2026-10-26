@@ -2,11 +2,11 @@
 notlar = {"Ayşe": 92, "Çağrı": 67, "Ömer": 45, "Şule": 78}
 
 işlev harf_notu(puan):
-    eğer puan >= 85:
+    eğer puan >= 85 ise:
         döndür "Pekiyi"
-    yoksa eğer puan >= 65:
+    yoksa eğer puan >= 65 ise:
         döndür "İyi"
-    yoksa eğer puan >= 50:
+    yoksa eğer puan >= 50 ise:
         döndür "Orta"
     yoksa:
         döndür "Tekrar çalış"

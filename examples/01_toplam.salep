@@ -9,7 +9,7 @@ yazdır("Toplam:", toplam)
 işlev kare(x):
     döndür x * x
 
-eğer toplam > 10:
+eğer toplam > 10 ise:
     yazdır("Büyük")
 yoksa:
     yazdır("Küçük")

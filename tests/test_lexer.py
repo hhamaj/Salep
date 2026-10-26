@@ -6,14 +6,16 @@ from salep import SalepHatası, çalıştır, çevir
 from salep.lexer import ANAHTAR_SÖZCÜKLER
 
 
-@pytest.mark.parametrize("tr, py", sorted(ANAHTAR_SÖZCÜKLER.items()))
+# 'eğer' tek başına yazılamaz; 'eğer ... ise:' kalıbı test_transform.py'de.
+@pytest.mark.parametrize("tr, py", sorted((tr, py) for tr, py in ANAHTAR_SÖZCÜKLER.items()
+                                          if tr != "eğer"))
 def test_her_anahtar_sözcük_tek_başına_çevrilir(tr, py):
     assert çevir(f"{tr}\n") == f"{py}\n"
 
 
 @pytest.mark.parametrize("kaynak, beklenen", [
-    ("eğer x:\n    geç\n", "if x:\n    pass\n"),
-    ("eğer x:\n    geç\nyoksa eğer y:\n    geç\nyoksa:\n    geç\n",
+    ("eğer x ise:\n    geç\n", "if x:\n    pass\n"),
+    ("eğer x ise:\n    geç\nyoksa eğer y ise:\n    geç\nyoksa:\n    geç\n",
      "if x:\n    pass\nelif y:\n    pass\nelse:\n    pass\n"),
     ("doğru iken:\n    kır\n", "while True:\n    break\n"),
     ("yanlış iken:\n    devam\n", "while False:\n    continue\n"),
@@ -30,18 +32,18 @@ def test_anahtar_sözcükler_bağlam_içinde(kaynak, beklenen):
 def test_çalışan_program_tüm_akış_sözcükleri(capsys):
     çalıştır(
         "işlev sınıflandır(n):\n"
-        "    eğer n < 0:\n"
+        "    eğer n < 0 ise:\n"
         "        döndür 'eksi'\n"
-        "    yoksa eğer n == 0 veya değil n:\n"
+        "    yoksa eğer n == 0 veya değil n ise:\n"
         "        döndür 'sıfır'\n"
         "    yoksa:\n"
         "        döndür 'artı'\n"
         "i = 0\n"
         "doğru iken:\n"
         "    i = i + 1\n"
-        "    eğer i == 2:\n"
+        "    eğer i == 2 ise:\n"
         "        devam\n"
-        "    eğer i > 3 ve değil yanlış:\n"
+        "    eğer i > 3 ve değil yanlış ise:\n"
         "        kır\n"
         "    yazdır(i, sınıflandır(i - 2))\n"
         "geç\n"
@@ -74,7 +76,7 @@ def test_satır_sayısı_ve_numaraları_korunur():
         "    x = '''çok\n"
         "satırlı eğer'''\n"
         "    eğer (i >\n"
-        "          1): yazdır(i)\n"
+        "          1) ise: yazdır(i)\n"
         "kullan matematik\n"
         "yoksa_değil = 1\n"
     )
@@ -108,7 +110,7 @@ def test_büyük_küçük_harfe_duyarlı():
 
 def test_nfc_normalleştirme(capsys):
     # 'ğ' harfi ayrışık biçimde (g + birleşik breve) yazılmış
-    ayrışık = unicodedata.normalize("NFD", "eğer doğru:\n    yazdır('ğ')\n")
+    ayrışık = unicodedata.normalize("NFD", "eğer doğru ise:\n    yazdır('ğ')\n")
     assert ayrışık != unicodedata.normalize("NFC", ayrışık)
     assert çevir(ayrışık) == "if True:\n    yazdır('ğ')\n"
     çalıştır(ayrışık)
@@ -138,4 +140,4 @@ def test_katı_kipte_ingilizce_sözcük_hata_verir(ingilizce, öneri):
 
 
 def test_katı_kip_türkçe_koda_izin_verir():
-    assert çevir("eğer x:\n    geç\n", katı=True) == "if x:\n    pass\n"
+    assert çevir("eğer x ise:\n    geç\n", katı=True) == "if x:\n    pass\n"

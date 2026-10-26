@@ -1,19 +1,19 @@
 # 30'a kadar asal sayıları bul
 işlev asal_mı(n):
-    eğer n < 2:
+    eğer n < 2 ise:
         döndür yanlış
     bölen = 2
     bölen * bölen <= n iken:
-        eğer n % bölen == 0:
+        eğer n % bölen == 0 ise:
             döndür yanlış
         bölen = bölen + 1
     döndür doğru
 
 asallar = []
 her sayı için aralık(1, 100) içinde:
-    eğer sayı > 30:
+    eğer sayı > 30 ise:
         kır
-    eğer değil asal_mı(sayı):
+    eğer değil asal_mı(sayı) ise:
         devam
     asallar.append(sayı)
 

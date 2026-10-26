@@ -1,5 +1,6 @@
 """Satır düzeyindeki özel kalıplar ve Salep -> Python çevirisi.
 
+* ``eğer KOŞUL ise:``                 ->  ``if KOŞUL:``  (``yoksa eğer`` için de)
 * ``her X için Y içinde:``           ->  ``for X in Y:``
 * ``KOŞUL iken:``                     ->  ``while KOŞUL:``
 * ``kullan matematik``                ->  ``import math as matematik``
@@ -22,6 +23,7 @@ MODÜL_TAKMA_ADLARI = {
 
 _HER_İPUCU = "Doğru biçim şöyle: her sayı için sayılar içinde:"
 _İKEN_İPUCU = "Doğru biçim şöyle: sayaç > 0 iken:"
+_İSE_İPUCU = "Doğru biçim şöyle: eğer sayı > 10 ise:"
 _İÇİNDEN_İPUCU = "Doğru biçim şöyle: matematik içinden sqrt kullan"
 
 
@@ -114,6 +116,26 @@ def _kullan_kalıbı(bler, satır, düzenlemeler, tüketilen):
             return
 
 
+def _ise_kalıbı(bler, satır, koşul_başı, düzenlemeler, tüketilen):
+    # eğer KOŞUL ise:  ->  if KOŞUL:   ('yoksa eğer' için koşul_başı = 2)
+    no = bler[satır[0]].start[0]
+    iki_nokta = next((k for k, b in _derinlik_sıfır(bler, satır)
+                      if b.type == tokenize.OP and b.string == ":"), None)
+    if iki_nokta is None:
+        if bler[satır[-1]].string == "ise":
+            raise SalepHatası("'ise' sözcüğünden sonra \":\" gelmeli.", no,
+                              "Satırın sonunda \":\" eksik olabilir.")
+        raise SalepHatası("'eğer' satırı 'ise:' ile bitmeli.", no, _İSE_İPUCU)
+    ise = iki_nokta - 1
+    if bler[satır[ise]].string != "ise":
+        raise SalepHatası("'eğer' satırında \":\" işaretinden önce 'ise' gelmeli.",
+                          no, _İSE_İPUCU)
+    if ise == koşul_başı:
+        raise SalepHatası("'eğer' ile 'ise' arasına bir koşul yazmalısın.", no, _İSE_İPUCU)
+    düzenlemeler.append(_sil_önündeki_boşlukla(bler, satır, ise))
+    tüketilen.add(satır[ise])
+
+
 def _iken_kalıbı(bler, satır, konum, düzenlemeler, tüketilen):
     # KOŞUL iken:  ->  while KOŞUL:
     no = bler[satır[konum]].start[0]
@@ -167,7 +189,12 @@ def özel_kalıp_düzenlemeleri(bler, satırlar) -> tuple[list[Düzenleme], set[
     for satır in satırlar:
         ilk = bler[satır[0]]
         son = bler[satır[-1]]
-        if ilk.type == tokenize.NAME and ilk.string == "her":
+        if ilk.type == tokenize.NAME and ilk.string == "eğer":
+            _ise_kalıbı(bler, satır, 1, düzenlemeler, tüketilen)
+        elif (ilk.type == tokenize.NAME and ilk.string == "yoksa" and len(satır) > 1
+              and bler[satır[1]].string == "eğer"):
+            _ise_kalıbı(bler, satır, 2, düzenlemeler, tüketilen)
+        elif ilk.type == tokenize.NAME and ilk.string == "her":
             _her_kalıbı(bler, satır, düzenlemeler, tüketilen)
         elif ilk.type == tokenize.NAME and ilk.string in ("kullan", "import"):
             _kullan_kalıbı(bler, satır, düzenlemeler, tüketilen)

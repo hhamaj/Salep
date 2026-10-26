@@ -24,8 +24,8 @@ ağ işlerinden önce gelir.
 
 | Salep | Python | Salep | Python |
 |---|---|---|---|
-| `eğer` | `if` | `doğru` | `True` |
-| `yoksa eğer` | `elif` | `yanlış` | `False` |
+| `eğer KOŞUL ise:` | `if KOŞUL:` | `doğru` | `True` |
+| `yoksa eğer KOŞUL ise:` | `elif KOŞUL:` | `yanlış` | `False` |
 | `yoksa` | `else` | `hiç` | `None` |
 | `KOŞUL iken:` | `while KOŞUL:` | `kır` | `break` |
 | `her X için Y içinde:` | `for X in Y:` | `devam` | `continue` |
@@ -34,8 +34,8 @@ ağ işlerinden önce gelir.
 | `ve` / `veya` / `değil` | `and` / `or` / `not` | `olarak` | `as` |
 | | | `M içinden A kullan` | `from M import A` |
 
-Dilbilgisi düzeltmesi: `iken` ve `içinden … kullan` Türkçe söz dizimine göre
-sona alındı (eski `iken x:` ve `şuradan … kullan …` biçimleri kaldırıldı).
+Dilbilgisi düzeltmesi: `ise`, `iken` ve `içinden … kullan` Türkçe söz dizimine
+göre sona alındı (eski `iken x:` ve `şuradan … kullan …` biçimleri kaldırıldı).
 
 ### Yerleşik işlevler
 
@@ -183,7 +183,7 @@ bazı Linux dağıtımlarında ayrıca kurulması gerekir.
 | `küresel` | `global` | |
 
 **Açık sorular:**
-- `in` ve `is` işleçlerinin Türkçesi ne olacak? `eğer x liste içinde:` biçimi
+- `in` ve `is` işleçlerinin Türkçesi ne olacak? `eğer x liste içinde ise:` biçimi
   `her` kalıbıyla karışabilir; ayrıntılı bir tasarım gerekiyor.
 - Liste üreteçleri (`[x*2 her x için l içinde]`) desteklenecek mi?
 

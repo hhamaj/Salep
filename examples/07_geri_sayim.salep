@@ -1,0 +1,8 @@
+# Roket fırlatma geri sayımı
+sayaç = 5
+
+sayaç > 0 iken:
+    yazdır(sayaç, "...")
+    sayaç = sayaç - 1
+
+yazdır("Kalkış! 🚀")

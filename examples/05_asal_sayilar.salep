@@ -1,0 +1,21 @@
+# 30'a kadar asal sayıları bul
+işlev asal_mı(n):
+    eğer n < 2:
+        döndür yanlış
+    bölen = 2
+    bölen * bölen <= n iken:
+        eğer n % bölen == 0:
+            döndür yanlış
+        bölen = bölen + 1
+    döndür doğru
+
+asallar = []
+her sayı için aralık(1, 100) içinde:
+    eğer sayı > 30:
+        kır
+    eğer değil asal_mı(sayı):
+        devam
+    asallar.append(sayı)
+
+yazdır("Asal sayılar:", asallar)
+yazdır("Kaç tane:", uzunluk(asallar))

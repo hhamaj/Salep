@@ -1,0 +1,16 @@
+# Bakkal hesabı
+fiyatlar = {"ekmek": 10, "süt": 35, "çikolata": 25, "elma": 15}
+sepet = ["ekmek", "çikolata", "elma", "elma"]
+
+toplam = 0
+her ürün için sepet içinde:
+    yazdır(ürün, "-", fiyatlar[ürün], "TL")
+    toplam = toplam + fiyatlar[ürün]
+
+yazdır("Toplam:", toplam, "TL")
+
+cebimdeki_para = 100
+eğer cebimdeki_para >= toplam:
+    yazdır("Para üstü:", cebimdeki_para - toplam, "TL")
+yoksa:
+    yazdır("Paran yetmiyor, biraz ürün çıkar.")

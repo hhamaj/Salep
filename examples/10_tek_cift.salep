@@ -1,0 +1,16 @@
+# Sayılar tek mi, çift mi?
+işlev çift_mi(sayı):
+    döndür sayı % 2 == 0
+
+tekler = 0
+çiftler = 0
+
+her s için aralık(1, 11) içinde:
+    eğer çift_mi(s):
+        yazdır(s, "çift")
+        çiftler = çiftler + 1
+    yoksa:
+        yazdır(s, "tek")
+        tekler = tekler + 1
+
+yazdır("Tek sayılar:", tekler, "| Çift sayılar:", çiftler)

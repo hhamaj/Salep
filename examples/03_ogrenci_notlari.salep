@@ -1,0 +1,19 @@
+# Öğrencilerin notlarını değerlendirelim
+notlar = {"Ayşe": 92, "Çağrı": 67, "Ömer": 45, "Şule": 78}
+
+işlev harf_notu(puan):
+    eğer puan >= 85:
+        döndür "Pekiyi"
+    yoksa eğer puan >= 65:
+        döndür "İyi"
+    yoksa eğer puan >= 50:
+        döndür "Orta"
+    yoksa:
+        döndür "Tekrar çalış"
+
+her öğrenci için sırala(notlar) içinde:
+    yazdır(öğrenci, "→", harf_notu(notlar[öğrenci]))
+
+ortalama = topla(notlar.values()) / uzunluk(notlar)
+yazdır("Sınıf ortalaması:", yuvarla(ortalama, 1))
+yazdır("En yüksek not:", en_büyük(notlar.values()))

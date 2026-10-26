@@ -1,0 +1,9 @@
+kullan matematik
+matematik içinden sqrt kullan
+
+yarıçap = 3
+alan = matematik.pi * yarıçap * yarıçap
+yazdır("Dairenin alanı:", yuvarla(alan, 2))
+yazdır("16'nın karekökü:", tamsayı(sqrt(16)))
+yazdır("Mutlak değer:", mutlak(-7))
+yazdır("Türü:", tür(alan) == ondalık)

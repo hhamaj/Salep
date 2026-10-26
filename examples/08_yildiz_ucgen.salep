@@ -1,0 +1,7 @@
+# Yıldızlarla üçgen çiz
+boy = 5
+
+her satır için aralık(1, boy + 1) içinde:
+    boşluk = " " * (boy - satır)
+    yıldızlar = "*" * (2 * satır - 1)
+    yazdır(boşluk + yıldızlar)

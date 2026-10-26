@@ -1,0 +1,6 @@
+# İlk programım
+isim = "Deniz"
+yaş = 9
+
+yazdır("Merhaba,", isim + "!")
+yazdır("Seneye", yaş + 1, "yaşında olacaksın.")

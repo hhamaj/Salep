@@ -1,0 +1,6 @@
+# 5'e kadar çarpım tablosu
+her satır için aralık(1, 6) içinde:
+    sonuçlar = []
+    her sütun için aralık(1, 6) içinde:
+        sonuçlar.append(yazı(satır * sütun))
+    yazdır(" ".join(sonuçlar))
